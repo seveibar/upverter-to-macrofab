@@ -18,3 +18,4 @@ in future runs by using `python upverter-to-macrofab.py upverter.upv tempo.json 
 ## TODOs
 
 * Remove tempo automation dependency
+* Improve/remove the need for manual component size entry
