@@ -40,6 +40,13 @@ if not board_offset:
 # GENERATE/READ KEY FILE
 # ----------------------------
 
+def getComponentDesignator(tempo, componentId):
+    for component in tempo["placements"]:
+        if component["ComponentId"] == componentId:
+            return component["DesignName"]
+
+    return False
+
 comp_keys = None
 if len(sys.argv) == 4:
     comp_keys = json.load(open(sys.argv[3]))
@@ -50,7 +57,14 @@ else:
     for comp_id in tempo["components"]:
         print("\n")
         comp = tempo["components"][comp_id]
-        print("Component {}".format(comp_id))
+
+        designator = getComponentDesignator(tempo, comp_id)
+
+        if (not designator):
+            print "Skipping unplaced component... {}".format(comp_id)
+            continue
+
+        print("Component {}".format(designator))
         print("Manufacturer: {}".format(comp["Manufacturer"]))
         mf_name = raw_input("Macrofab MPN (\"SKIP\" to skip):")
         if mf_name.lower().strip() == "skip": continue
